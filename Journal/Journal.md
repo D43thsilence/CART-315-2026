@@ -109,5 +109,13 @@ Then, within if statements that rely on the random number assigned to the state 
 
 ![RdmStateRework](Media/RdmStateRework.png)
 
+With the completed BallScript, each reset creates various game states. Which helps retain the player's interest as the game will behave differently on each round. Also preventing the game from being monotonous due to being repetitive. I believe that this is an appropriate solution to my initial question.
+
+![StateExample](Media/StateExample3.png)
+
+![StateExample](Media/StateExample.png)
+
+![StateExample](Media/StateExample2.png)
+
 ### Concluding Thoughts
 Through this project, I learned how to tackle game development through the act of asking a question. Games can be built with the goal of providing an answer to all sorts of questions that someone could asks themselves. In this case, I asked a question regarding the emotional state of players interacting with Pawng. This has led me to theorize and study the various aspects of the game that can lead to this emotional response (boredom), and work on these outlined aspects to potentially change this emotional response for the better.
