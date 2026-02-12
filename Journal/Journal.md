@@ -119,3 +119,75 @@ With the completed BallScript, each reset creates various game states. Which hel
 
 ### Concluding Thoughts
 Through this project, I learned how to tackle game development through the act of asking a question. Games can be built with the goal of providing an answer to all sorts of questions that someone could asks themselves. In this case, I asked a question regarding the emotional state of players interacting with Pawng. This has led me to theorize and study the various aspects of the game that can lead to this emotional response (boredom), and work on these outlined aspects to potentially change this emotional response for the better.
+
+## Unity Exploration: BreakinOut ((12/02/2026))
+
+### Initial Idea
+
+Last week's exploration project showed me that interesting results can be acheived by introducing inconcistency and variation into a game's static/consistent elements or mechanics. Considering that I wish to build upon the breakinOut project, a classic video game where you must knock a ball towards destructible bricks to destroy them. I must first identify what elements of this game are static and/or consistent.
+
+Within this game, the consistent elements are the paddle's speed and size, the ball's speed and size , the position, rotation, durability and point value of the bricks. Within the previous class, we already figured out how to add some variation to the point value of the individual bricks. So starting from there I decided to implement variation to the bricks' position and durability.
+
+### Development Process
+
+Taking inspiration from the code I wrote to include obstacles in the first week's exploration, I enabled the bricks to move left and right and to change their movement's direction when colliding with one another and added a Collision2D component. To prevent the bricks from always moving in the same direction, the initial movement speed and direction of each brick will be randomly assigned.
+
+![StateExample](Media/MovementSpeedSet.png)
+
+![StateExample](Media/BrickMovement.png)
+
+However, after compiling the code and hitting the play button, this is what the play area looked like.
+
+![StateExample](Media/CollisionlessMovement.png)
+
+The bricks moved properly, but overlaped eachother instead of colliding because I didn't add a rigidbody 2D component to enable the bricks to collide. After adding the rigidbody 2D component, I tested my program again.
+
+![StateExample](Media/InitialMovementTest.png)
+
+The bricks pushed themselves out of place! Maybe this effect could be interesting for a future project, but it wasn't what I was looking for here. So I adjusted the rigidbody 2D settings to lock the y position and the rotation of the bricks to prevent them from rotating and from moving up and down.
+
+![StateExample](Media/ClippingMovement.png)
+
+This time the bricks clipped into eachother and got stuck. Which made their movement behave improperly. I assumed that the problem was that the bricks lacked space, which causes them to collide with eachother too frequently and consequently end up clipping into eachother. So I created a new brick prefab that is smaller than the original brick in order to leave more space between each one.
+
+![StateExample](Media/SmallBrick.png)
+
+![StateExample](Media/SmallBrickTest.png)
+
+The bricks no longer clipped into eachother thanks to the extra space they have to move in now. However, some bricks are static. Probably due to the fact that the Random.Range code line includes the value 0. So I created a setup that should hopefully avoid assigning the value 0 to any brick's movement speed.
+
+![StateExample](Media/MovementSpeedSet2.png)
+
+But after compiling, I have met another problem.
+
+![StateExample](Media/MovementSpeedSetFailure.png)
+
+The bricks are not moving! And after verifying the moveent speed value of the bricks during runtime, they are all set to 0!
+
+In order to prevent this from happening, I decided to change how movement speed is assigned to each brick. The new method I scripted starts with a new float "initialMovement" and a boolean "initializeMovement".
+
+![StateExample](Media/initialMovementVar.png)
+
+When a brick gets created, a random number within the specified range (-1, 2) gets gets assigned to the initialMovement variable. Then, the assigned value drives the function that will determine the brick's initial movement speed.
+
+![StateExample](Media/AssignMovement.png)
+
+The if and else if statements within the initializeMovement function depend on the value assigned to "initialMovement". If the value is below or equal to 0, the brick's initial movement will be towards the left. If the value is superior to 0, the brick's initial movement will be towards the right. This setup completely avoids assigning the movement value of 0, so no brick stays still. However, the bricks began clipping into eachother and got stuck in large groups again. So I tried another potential solution, which is to increase the size of their collision box.
+
+![StateExample](Media/SmallBrickRegCollision.png)
+
+![StateExample](Media/SmallBrickBigCollision.png)
+
+Somehow, this solution wasn't able to solve the problem. The bricks still got stuck, but they had more space between eachother due to their larger collision box.
+
+![StateExample](Media/SmallBrickBigCollisionTest.png)
+
+Honestly, since collisions are causing so much trouble, I've decided that I will simply abandon making the bricks change their direction by colliding with eachother and allow them to overlap. So I removed the rigidBody 2D which enabled this behaviour, adjusted the range of available values for movement speed and with this, this exploration prototype is complete. 
+
+![StateExample](Media/SmallBrickOverlap.png)
+
+![StateExample](Media/SmallBrickOverlap2.png)
+
+### Concluding Thoughts
+
+Through this exploration, I discoverd the complexity of introducing randomized and continuous variation into a game. Building a game with variation and randomness in mind sadly makes the it very prone to errors and bugs. I am a little sad that I wasn't able to make collisions work. But I am still quite happy with my final result. I now have much greater insight on the reason why video games tend to avoid too much randomness and variation within the game's mechanics/code, because not only it can cause many cases of unintended behavior, but also make the game difficult with how annoying it is to do certain things. For example, when I tried playing my complete prototype. I realized that the less bricks there were, the more annoying ther were to destroy, especially those that moved too quickly. It's nice and all that the game never behaves in a repetitive manner thanks to randomness and variation, but it is also important such things must have the smallest impact possible the game's playability. Lest you piss off your playerbase and end up with nobody playing your game because its too "random".
