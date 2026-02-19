@@ -191,3 +191,55 @@ Honestly, since collisions are causing so much trouble, I've decided that I will
 ### Concluding Thoughts
 
 Through this exploration, I discoverd the complexity of introducing randomized and continuous variation into a game. Building a game with variation and randomness in mind sadly makes the it very prone to errors and bugs. I am a little sad that I wasn't able to make collisions work. But I am still quite happy with my final result. I now have much greater insight on the reason why video games tend to avoid too much randomness and variation within the game's mechanics/code, because not only it can cause many cases of unintended behavior, but also make the game difficult with how annoying it is to do certain things. For example, when I tried playing my complete prototype. I realized that the less bricks there were, the more annoying ther were to destroy, especially those that moved too quickly. It's nice and all that the game never behaves in a repetitive manner thanks to randomness and variation, but it is also important such things must have the smallest impact possible the game's playability. Lest you piss off your playerbase and end up with nobody playing your game because its too "random".
+
+## Unity Exploration: Level Based BreakinOut ((19/02/2026))
+
+### Initial Idea
+
+Considering how in the following weeks we will begin developing a project on a larger scale, I wanted to eget a little head start by experimenting on a longer gameplay loop with added complexity. Looking back at my previous BreakinOut project, I tought that it could be an interesting experiment to try to create an expansion to this game by building something new ontop of its current gameplay loop.
+
+A great way to create something new based on an existing game is to change or transform the game's mechanics. The game that I am modifying here, a classic brick breaking game, is played by launching a ball towards a brick using a paddle in order to gain points while avoiding letting the ball reach the bottom of the screen. The game usually takes place in a small square or rectangular arena and the player can take advantage of the walls to send the ball towards the bricks. With these basic mechanics outlined, I had to decide which one I would adjust in order to create a longer gameplay loop that feels fresh and innovative compared to the original game. I thought to myself that It could be interesting to go for modifying the arena in which the game could take place. Then, I got the idea that I could combine elements of the platformer genre with this game. Creating a game where you (the paddle) must navigate across various levels while using the ball to remove obstacles in your way and/or to create new paths. 
+
+### Development Process
+
+I began by creating the level the game will take place in. It wasn't too difficult to make using primitive shapes. I also had to adjust the size of the paddle, the ball and both their speed values due to the change of size.
+
+![StateExample](Media/InitialLevelBuild.png)
+
+Then, I wanted to add obstacles. To create them, I simply duplicated the bricks used in the original game, adjusted their size, and removed the brickScript which made them move since I wanted them to stay still.
+
+![StateExample](Media/LevelObstacles.png)
+
+Finally, to make the level end, I created a yellow colored brick that when destroyed, would change the scene to the game over screen. I put this brick at the end of the level.
+
+![StateExample](Media/WinBrickScript.png)
+
+![StateExample](Media/LevelWinBrick.png)
+
+Then, to enable the player to properly navigate across the level, I had to enable him to jump. So, in the paddleScript, I added code to enable the paddle to jump.
+
+![StateExample](Media/PaddleJump.png)
+
+To make the player jump, the script adds a vertical velocity to the player. And to disable jumping mid air, I used an isJumping boolean that is set to true when the player hits the jump key and that only returns to fals when the player collides with the ground. However, the collision system didn't work very well and the player could still jump mid air as if he was flying. I tried multiple other methods to fix this, but in the end, I left it as is because I thought that despite being an unintended behaviour, It reinforced the importance of the ball in clearing the obstacles. The player's movement is free and unrestricted, but he cannot bypass the obstacles.
+
+With all of this, the game worked relatively well. However, an annoying problem surfaced during gameplay.
+
+![StateExample](Media/BallClipping.png)
+
+The ball went out of bounds!
+
+I theorized that the ball went out of bounds due to its speed. When going over the ball's script. I noticed that I forgot to make it recognize the ground and execute the speedCheck() function upon collision, so I added that in the script in hopes that it would fix my problem.
+
+![StateExample](Media/BallGroundCheck.png)
+
+Sadly, It did not fix my problem. the ball kept reaching ridiculously high speeds. So I decided to make the ball heavier instead to prevent it from accellerating and moving too quickly. I increased the ball's mass from 0,01 to 1. Weakening the application of kinetic force on it and sucessfully slowing down its movement overall. The ball no longer went out of bounds. 
+
+![StateExample](Media/LevelGameplay.png)
+
+![StateExample](Media/LevelGameOver.png)
+
+Also, since the obstacles are bricks, the player's score will vary depending on how many obstacles they destroy. They aren't forced to destroy all of them to complete the level. But to obtain the highest score possible, they will have to destroy all of them. This adds an extra layer of challenge for those who are interested.
+
+### Concluding thoughts
+
+This project was an interesting opportunity to try adding a twist to an existing game genre/gameplay loop. I've seen many cases where innovation in the landscape of games and video games was acheived through this technique and I understand no why it works so well. Reminiscing on the concepts of randomness and variation that I explored in the earlier weeks, you can create an incredible amount of changes and variation in a preexisting game by tweaking a few variables or changing rules. Here, I changed the rules of the traditional brick breaking game and transformed it into a completely new experience while also retaining some connection to the original by adapting its gameplay and feedback loop to a new environment: a platforming game.

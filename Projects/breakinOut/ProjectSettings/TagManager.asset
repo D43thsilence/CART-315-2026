@@ -7,11 +7,15 @@ TagManager:
   - Brick
   - Paddle
   - Enemy
+  - Wall
+  - Reset
+  - Ground
+  - Ball
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
