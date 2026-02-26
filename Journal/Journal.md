@@ -243,3 +243,33 @@ Also, since the obstacles are bricks, the player's score will vary depending on 
 ### Concluding thoughts
 
 This project was an interesting opportunity to try adding a twist to an existing game genre/gameplay loop. I've seen many cases where innovation in the landscape of games and video games was acheived through this technique and I understand no why it works so well. Reminiscing on the concepts of randomness and variation that I explored in the earlier weeks, you can create an incredible amount of changes and variation in a preexisting game by tweaking a few variables or changing rules. Here, I changed the rules of the traditional brick breaking game and transformed it into a completely new experience while also retaining some connection to the original by adapting its gameplay and feedback loop to a new environment: a platforming game.
+
+## Session Project: Brainstorming ((65/02/2026))
+
+The first step to a project is the idea behind it, working without a clear idea of what I want to make can lead to a headless chicken scenario. So I wanted to start this project by writing down the details of the project that I will be working on. The brain dump done in class helped alot in generating a wide variety of potential projects. During the brain dump, I split the keywords I wrote down into eight categories: 
+
+Guides: Sounds, Warnings, Color, indicators, map, arrows
+
+Space & Style: 3D, verticality, Atmospheric, Stylized, Cartoony, Y2k x Frutiger aero, Bryce 3D, 2000s core
+
+Enemies: Obstacles, targets, moving enemies, jumping enemies, blocking/parrying enemies, invincible enemies
+
+Hazards: holes, fire, slippery floors, traps
+
+Goals: Avoid the ball, avoid the enemies, destroy all targets, reach the ending quickly, survive for x duration
+
+Areas: Garden, city, mountain range, sky, space, volcano, temple, castle, streets
+
+Total results: max speed, avoidance, score, targets destroyed
+
+During the previous weeks' explorations, I developed a greater and greater interest in movement within games and how its behaviour and the actions it can enable to various objects can create interesting gameplay experiences. I decided then that my game will have a focus on movement and environmental interaction. From this focus, I created three potential ideas that I may continue developing in the following weeks.
+
+Idea 1: A movement-based platforming game where you must destroy objects or enemies by striking them with a boomerang. Since it is a boomerang, it is constantly returning to you and if it hits you, you lose.
+
+Idea 2: A Stealth turn-based game where you must stealthily sneak around enemies with limited movement available to you during your turn. You move around by rolling a dice, but you can also manipulate the dice’s result by using the environment (throwing the dice at a wall for example)
+
+Idea 3: A platformer where you must build your way out using your own body. Create duplicates of yourself and adjust their position and rotation to build stairs, ladders, bridges and more.
+
+In terms of ease of implementation, the 1st idea would be the easier one to develop into a playable prototype. The second and third ideas have a much higher base implementation requirements but I do think these ideas are quite interesting and I may merge them into the my project if I am interested. The keywords generated in the brain dump will be a great aid in creating the project. As thanks to them, I already have an idea of what I should implement in my game project and I won't get stuck in the planning process due to having a list of references to pull from.
+
+
