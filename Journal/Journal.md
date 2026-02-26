@@ -272,4 +272,10 @@ Idea 3: A platformer where you must build your way out using your own body. Crea
 
 In terms of ease of implementation, the 1st idea would be the easier one to develop into a playable prototype. The second and third ideas have a much higher base implementation requirements but I do think these ideas are quite interesting and I may merge them into the my project if I am interested. The keywords generated in the brain dump will be a great aid in creating the project. As thanks to them, I already have an idea of what I should implement in my game project and I won't get stuck in the planning process due to having a list of references to pull from.
 
+To test out the 1st idea, I revised one of my older game projects. It was a game where you had to avoid a growing enemy while gathering collectibles spread across the level. Here I was able to program the enemies to follow the player automatically, which means that I could reproduce this code to make the boomerang move towards the player after being thrown.
+
+![StateExample](Media/EnemyTrackingLogic.png)
+
+The enemy's x and y acceleration changes depending on the player's position in relation to it. Consequently making it follow the player. This method only takes the x and y axis into account so If I wanted to pivot to 3D, I would have to include the z axis too. But I'll decide that later.
+
 
