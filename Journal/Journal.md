@@ -278,4 +278,56 @@ To test out the 1st idea, I revised one of my older game projects. It was a game
 
 The enemy's x and y acceleration changes depending on the player's position in relation to it. Consequently making it follow the player. This method only takes the x and y axis into account so If I wanted to pivot to 3D, I would have to include the z axis too. But I'll decide that later.
 
+## Session Project: 2003D Breaker development begins! ((11/03/2026))
 
+### Before development: Solidifying the idea of 2003D Breaker
+
+Last week, I mentionned the importance of having a solid idea behind a project. Following my own advice, I firstly debated on which idea I came up with to expand upon. The 1rst idea came out as the winner. From this, I created a document outlining the majority of the project while leaving some space for some changes in case I change my mind on some things or I get inspired to add extra things to my project.
+
+Titled 2003D Breaker, this project will be a movement-based platforming game where you must destroy objects or enemies by striking them with a boomerang like weapon. The game's special twist is that you cannot catch wour weapon after it is initially thrown and your weapon can hurt you. Additionaly, since it is a boomerang, it will constantly attempt to return to you and if it hits you, you will lose life points.
+
+Many of the ideas that I came up with during the brainstorming session will be used in this project:
+
+Guides: Sounds, Warnings, Color, indicators, map, arrows
+
+Since I am making a platformer, I could simply organize the level's design to naturally guide the player towards the end of the level. If needed, I may incorporate color codes, warnings, arrows and indicators in areas with less intuitive traversal paths.
+
+Space & Style: 3D, verticality, Atmospheric, Stylized, Cartoony, Y2k x Frutiger aero, Bryce 3D, 2000s core
+
+I think that platformers benefit greatly from 3D space, so I will be making the game in 3D in Unity. In terms of visual style, if my available time allows it, I find stylized retro visuals very attractive. So I would definetly like to emulate this style within my game (again, if my time allows it, I'll focus primarily on prototyping and making the mechanics work).
+
+Enemies: Obstacles, targets, moving enemies, jumping enemies, blocking/parrying enemies, invincible enemies
+
+Hazards: holes, fire, slippery floors, traps
+
+Enemies and hazards are a staple in platformers. I will definetly include enemies in the game and giving them the ability to block in a specific direction for example could creat interesting scenarios where the player must make clever use of the boomerag weapon's motion path. Traps also could create interesting dynamics with the boomerang weapon as the player will have to be wary of them alongside his own weapon.
+
+Goals: Avoid the ball, avoid the enemies, destroy all targets, reach the ending quickly, survive for x duration
+
+The game's primary goal is to complete the level. Extra secondary goals could be to complete it without getting hit, complete it in under 1 minute, etc...
+
+Areas: Garden, city, mountain range, sky, space, volcano, temple, castle, streets
+
+These are all fantastic potential areas for levels, but since this is a prototyping class, I will probably have to focus on making 1 level first. For the sake of ease of creation, I will probably create a level high in the sky, which would give me the affordance of only having to model floating islands and not having to model the a landscape.
+
+Total results: max speed, avoidance, score, targets destroyed
+
+### Development process: The boomerang
+
+The boomerang-like behaviour of the player's weapon is arguably one of the most important parts of my project. Last week, I returned to one of my older projects and studied the logic I used to code an enemy that follows the player. With the information I gathered from this study, I created the first iteration of the boomerang script which will enable the player's weapon to behave like one.
+
+![StateExample](Media/BoomerangScriptOriginal.png)
+
+So far, the script begins by storing various variables such as the speed, the maximum distance it can travel before returning, its starting position, a "returning" boolean which will be used to determine whether the boomerang is returning or not, which game object is the player and their position(transform data). Once instantiated, the boomerang flies forward until it reaches the max distance, then the "returning" boolean is set to true and the boomerang begins to return to the player by tracking the player's position and calculating Vector3 transforms that will lead the boomerang to reach the player. This method only enables the boomerang to track the player rigidly, but it's a fair start.
+
+![StateExample](Media/BoomerangInitialTest.gif)
+
+### To-do List
+-Boomerang Acceleration
+The boomerang script works fine so far, but I need to figure out how to make it accelerate and decelerate naturally as it only moves with a static speed. Figuring this out is very important as it should be what enables the boomerang to overshoot and fly past the player.
+
+-Boomerang return movement
+To adjust the boomerang's return movement, instead of continuously tracking the player, I could make it capture and store the player's position once it has reached its max distance and use that position as a point of origin. It will move to that point, then move further until it reaches max distance, then restart this cycle.
+
+-Enemy Programming
+Create and program enemies. Take inspiration from the obstacles programmed in the fallAsleep+ project.
