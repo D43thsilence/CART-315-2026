@@ -246,6 +246,8 @@ This project was an interesting opportunity to try adding a twist to an existing
 
 ## Session Project: Brainstorming ((25/02/2026))
 
+### Initial Idea Brainstorming
+
 The first step to a project is the idea behind it, working without a clear idea of what I want to make can lead to a headless chicken scenario. So I wanted to start this project by writing down the details of the project that I will be working on. The brain dump done in class helped alot in generating a wide variety of potential projects. During the brain dump, I split the keywords I wrote down into eight categories: 
 
 Guides: Sounds, Warnings, Color, indicators, map, arrows
@@ -272,11 +274,17 @@ Idea 3: A platformer where you must build your way out using your own body. Crea
 
 In terms of ease of implementation, the 1st idea would be the easier one to develop into a playable prototype. The second and third ideas have a much higher base implementation requirements but I do think these ideas are quite interesting and I may merge them into the my project if I am interested. The keywords generated in the brain dump will be a great aid in creating the project. As thanks to them, I already have an idea of what I should implement in my game project and I won't get stuck in the planning process due to having a list of references to pull from.
 
-To test out the 1st idea, I revised one of my older game projects. It was a game where you had to avoid a growing enemy while gathering collectibles spread across the level. Here I was able to program the enemies to follow the player automatically, which means that I could reproduce this code to make the boomerang move towards the player after being thrown.
+To test out the 1st idea, I revised one of my older game projects. It was a game where you had to avoid a growing enemy constantly chasing you. Here I was able to program the enemies to follow the player automatically, which means that I could reuse this code to make the boomerang move towards the player after being thrown.
 
 ![StateExample](Media/EnemyTrackingLogic.png)
 
 The enemy's x and y acceleration changes depending on the player's position in relation to it. Consequently making it follow the player. This method only takes the x and y axis into account so If I wanted to pivot to 3D, I would have to include the z axis too. But I'll decide that later.
+
+![StateExample](Media/AvoidTheEnemy.gif)
+
+### Future Steps
+
+The next step for the project would be to create a solid and highly descriptive project idea and outline the steps that will lead to its completion. It's obviously impossible to perfectly predict and plan the project's development and there will always be unexpected moments that may lead to spending time in other parts of the project or even new additions. But having a clear idea of what will be needed to lead the project to fruition helps greatly with maintaining a sense of direction and avoiding getting "lost in the sauce".
 
 ## Session Project: 2003D Breaker development begins! ((11/03/2026))
 
