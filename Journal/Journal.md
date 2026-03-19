@@ -339,3 +339,48 @@ To adjust the boomerang's return movement, instead of continuously tracking the 
 
 -Enemy Programming
 Create and program enemies. Take inspiration from the obstacles programmed in the fallAsleep+ project.
+
+## Session Project: 2003D Breaker development: movement ((19/03/2026))
+
+This week, I decided to tackle the most important component of my game, movement. I wanted to finalize the script that enables the player to move and the BoomerangScript’s tracking method as it was too precise and consequently made it very difficult for the player from dodging it.
+
+### Development process: Finalizing player movement
+
+In the case of the player’s movement. The script that enables the player to move and jump worked just fine. To enable the main camera to be controllable with a mouse and to follow the player, I used the Cinemachine FreeLook camera included in the Cinemachine add-on. However, the player’s movement didn’t adapt to the camera turning around. For example, if I turned my camera to the left and held the “w” key to move forward, I would move to the right instead.
+
+To adjust this, I used some math to adjust the vector used to move the player in order for it to be relative to the camera’s angle. 
+
+![StateExample](Media/PlayerMovementRotate.png)
+
+By calculating a vector facing forward from the camera’s view angle and multiplying that vector by the vector used for movement then normalizing it, I made it possible to .
+
+### Development process: The boomerang pt2
+
+In the case of the boomerang’s movement. I while I was reviewing the method used to make it move in game. I had to make a decision: Should I make the boomerang move using step-by-step translation or physics-based movement?
+
+For my game, I needed to replicate a boomerang's ability to overshoot when returning to the one who threw it. After studying real-life boomerangs and a few hours of trial and error in modifying the original BoomerangScript, I decided to opt for the physics-based approach since I realized that in the original step-by-step translation method, I was essentially recreating physics-based movement (acceleration, deceleration, friction, drag, etc...). So why not just use physics directly instead.
+
+To enable the boomerang to move using physics, I took heavy inspiration from the ballScript from the breakinOut+ project. The ballScript uses the “addforce” function to apply a force on the rigidbody. Since the BoomerangScript already calculates a vector that points towards the player’s position. I can simply apply a force in the direction of that vector to make the boomerang move towards the ball using physics. After figuring this out, I immediately went to testing.
+
+![StateExample](Media/BoomerangCompleteInitialTest.gif)
+
+For some reason, it didn't seem like the ball was tracking the player. Instead, it bounces left and right without a clear direction. Considering how this is most likely a physics issue, I went over the rigidbody's parameters and noticed that I was using the "ballMat" physics material.
+
+![StateExample](Media/BallMat.png)
+
+ I decided to remove it then test again to see if the behaviour changes.
+
+![StateExample](Media/BoomerangCompleteNoMatTest.gif)
+
+The boomerang now moves properly and tracks the player relatively well. But now a new problem surfaced. The boomerang wouldn't dissapear anymore when it entered the ranged within which it could be "caught" by the player. The BoomerangScript uses the distance between the player and the boomerang to determine whether to destroy the boomerang or not. I decided to increase the minimum distance required for the boomerang to be caught by the player.
+
+![StateExample](Media/BoomerangCompleteDistanceTest.gif)
+
+### To-do list
+
+- The BoomerangScript is now pretty much complete. All that is left would be creating a custom physics material for the boomerang object itself, extra tweaks, and, if possible, enabling it to phase through objects I wouldn't want it to collide with.
+
+- Begin testing collision interactions between the boomerang and foreign rigidbodies.
+
+- Continue working on enemy programming. The method I used to make the boomerang home in on the player could be used in the enemies too to make their movement more interesting and varied instead of being linear.
+
