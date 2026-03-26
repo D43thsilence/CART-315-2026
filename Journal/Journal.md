@@ -384,3 +384,74 @@ The boomerang now moves properly and tracks the player relatively well. But now 
 
 - Continue working on enemy programming. The method I used to make the boomerang home in on the player could be used in the enemies too to make their movement more interesting and varied instead of being linear.
 
+## Session Project: 2003D Breaker development: enemies ((26/03/2026))
+
+This week I decided to work on the game's enemies. I wanted to create at least one type of enemy to include within this prototype as I planned.
+
+### Development process: Creating the script that drives enemies
+
+Before beginning to work on the script that drives the enemies, I had to decide on how would I want the enemies to behave within the game. Will the enemies stay grounded or can they fly? Would I want them to follow specific paths? Would I want them to track the player? If yes, with how much accuracy? For now, I decided that the enemies in the game will be able to fly (maybe other enemy types will be grounded), they won't follow specific paths, they will track the player instead. Most importantly, just like the boomerang, they must be able to miscalculate their movement and overshoot the player.
+
+The desire to avoid making the enemy's movement deathly accurate made me remember how I divided the two types of methods I use to make objects move within the game.
+
+Moving using basic translation: Making the enemies move using translation can make their movement towards the player a little too accurate, which can make them more difficult to dodge as they will home in on you with perfect precision.
+
+Moving using physics: Just like with the boomerang, making the enemies move using physics makes their homeing movement much less accurate. They can now miss you if you run close by and they can overshoot you if they are moving too quickly.
+
+Thus I decided to make the enemies move using physics just like the boomerang. Consequently, the Enemy script I created for them is very inspired by the BoomerangScript itself. It draws a vector pointing towards the player and applies a force in that direction on the enemy GameObject.
+
+![StateExample](Media/EnemyMovementScript.png)
+
+After creating this script, I created a test enemy (a simple capsule) and applied the script to it to test its functionnality.
+
+![StateExample](Media/EnemyPlayerFollow.gif)
+
+The script works well, the enemy tracks the player in a similar fashion as the boomerang. The next step is to enable the enemy to eliminate the player. To do so, I simply used collisions. If the enemy collides with the player, the player GameObject is destroyed and they lose.
+
+![StateExample](Media/DestroyPlayerContact.png)
+
+Of course I then tested this new fuction.
+
+![StateExample](Media/EnemyDestroyPlayer.gif)
+
+The player does get eliminated when entering colliding with the enemy. Now, I can add the final touch to the enemy script: the ability to defeat(destroy) them using the boomerang. To do so, I used the same collision system the enemies use to destroy the player GameObject, but now targeting the enemies instead.
+
+![StateExample](Media/BoomerangDestroyEnemyContact.png)
+
+I then tested this new fuction.
+
+![StateExample](Media/BoomerangEnemyDestroy.gif)
+
+The player's boomerang can now eliminate enemies. With that, the script that drives the enemies is pretty much complete. Now I must set up the enemy spawners which will dictate how and where the enemies spawn.
+
+Last week, I created an outline for the game's first level. This level will alternate between obstacles and areas with enemies to defeat. Once you overcome an obstacle, there will be an area where you must defeat enemies before proceeding towards the next obstacle. In total, there will be 4 obstacles and 3 areas with enemies to defeat. The final obstacle being the one behind which the level's end is hiding.
+
+Considering how I divided this level in steps. The direction that I am planning to take in terms of level design will be to create interconnected dedicated areas for each obstacle/puzzle to overcome and for each wave of enemies to defeat. Since there will be areas dedicated for combat, the method that I will use to spawn enemies will be using a collision box that will encompass the entire battle arena. Once the player steps inside, the enemies will spawn in random points within the collision box and from there will begin moving towards the player to attack them. To make this possible, I created a EnemySpawner script that uses collisions to determine whether the player has entered it and spawns instances of a select enemy prefab within the area it covers.
+
+![StateExample](Media/EnemySpawnerScriptOriginal.png)
+
+I enlarged the test area and tested the EnemySpawner's functionnality.
+
+![StateExample](Media/EnemyInstantiateProblem.gif)
+
+For some reason the enemies that are spawned are way too big! Instantly destroying the player upon spawning. I decided to review the code line that creates the enemy instances as the prefab that it is supposed to instantiate doesn't have that size. Which means the problem must be in the act of creating instances of the prefab. I found out that I made the instancing code line refer to the EnemySpawner's transform(scale) values. Which probably enlarged the instanced enemies as they would use these values. Thus I removed this reference within the code line.
+
+From this:
+
+![StateExample](Media/EnemyInstantiateProblem.png)
+
+To this:
+
+![StateExample](Media/EnemyInstantiateFixed.png)
+
+I then tested the spawner once again to see if this change solved my problem.
+
+![StateExample](Media/EnemyInstantiateFixed.gif)
+
+The enemies now spawn properly and with the right size. The EnemySpawner script is now complete!
+
+Looking back at the solution I created to spawn enemies, I realized that using a box to spawn enemies wouldn't work very well in a larger more complex area with varied elevations (a staircase for example). As enemies could spawn inside terrain due to the spawning area clipping into surrounding terrain. But this could be solved using complex custom made shapes for the spawn areas or dividing one large spawn area into a multitude of smaller boxes that avoid clipping into the terrain. I also noticed that since the EnemySpawner script spawns instances of a prefab, I could make it spawn multiple types of enemies at once too or even curate a specific type of battle by specifying where to spawn which kind of enemy within the battle arena. There is potential for expansion here, I will probably try to explore this if I ever try making more levels in the future.
+
+### To-do list
+
+- Begin working on the obstacles and level design. Think about possible types of obstacles that would be interesting to interact with the current mechanics (destructible walls, opening doors by hitting a lever, etc...) and how the level could be designed with them in mind (giving the player enough space within the puzzle/obstacle area to build up the boomerang's momentum).
