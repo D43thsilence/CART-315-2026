@@ -500,7 +500,7 @@ I had to try a variety of methods to make this work since some of them led to er
 
 The second method that i tried was to use a list. The EnemySpawner script would create a list containing every enemy that it spawned and it would manage the position of each one of them, preventing them from going beyond the minX, maxX, minZ, and maxZ values.
 
-![StateExample](Media/enemySpawnerList.png)
+![StateExample](Media/EnemySpawnerList.png)
 ![StateExample](Media/EnemySpawnerPositionConstrain.png)
 
 I then tested this constrain system.
