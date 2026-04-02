@@ -455,3 +455,80 @@ Looking back at the solution I created to spawn enemies, I realized that using a
 ### To-do list
 
 - Begin working on the obstacles and level design. Think about possible types of obstacles that would be interesting to interact with the current mechanics (destructible walls, opening doors by hitting a lever, etc...) and how the level could be designed with them in mind (giving the player enough space within the puzzle/obstacle area to build up the boomerang's momentum).
+
+## Session Project: 2003D Breaker development: 1st level ((02/04/2026))
+
+For this week, my goal was to work on the game’s first level and at least finish one obstacle. 
+
+### Development process: Creating the first level
+
+As mentioned in one of my earlier journals, this level will follow the following format:
+
+1st obstacle => Battle area => 2nd obstacle => Battle area => 3rd obstacle => Battle area => 4th obstacle (Final)
+
+With this in mind, I began selecting what types of obstacles will be present in this level. Since this is the first level, I need to choose obstacles that highlight the game’s mechanics and gameplay without being too difficult. So I choose to have the following obstacles:
+
+1st obstacle: Climbing platforms
+
+2nd obstacle: Walking on narrow passage
+
+3rd obstacle: Pushing objects out of the way
+
+4th obstacle (Final): Destroy the target
+
+With the level’s design settled, I began creating a low-fidelity prototype of the level for testing purposes.
+
+![StateExample](Media/LevelObstacle1.png)
+
+I quickly created the level's first obstacle with the first battle area and immedieatly went to testing. However, something bizarre happened during this first test:
+
+![StateExample](Media/EnemySpawnPositionInitialTest.gif)
+
+The enemies spawned outside of their designated spawn area. To find the problem, I reopened the EnemySpawner script and looked for mistakes. And I found one mistake:
+
+![StateExample](Media/ZCalculationMistake.png)
+
+The MinZ and MaxZ variables mistakenly calculated using x values. So I corrected these formulas to use the right variables.
+
+![StateExample](Media/ZCalculationFixed.png)
+
+![StateExample](Media/EnemySpawnPositionFixed.gif)
+
+Now the enemies spawn inside the spawn area. But I noticed that even when the battle area is just a simple plane, the enemies can get stuck outside of it. To avoid enemies being stuck outside of the battle area, I decided to constrain them within their spawn area.
+
+I had to try a variety of methods to make this work since some of them led to errors. For example, the my first attempt of implementing this mechanic relied on collisions. I wanted to make each enemy object use collisions to recognize where the spawn area is and then pull the minX, maxX, minZ, and maxZ variables from it. However this didn't work due to variable conversion issues and compiler errors.
+
+The second method that i tried was to use a list. The EnemySpawner script would create a list containing every enemy that it spawned and it would manage the position of each one of them, preventing them from going beyond the minX, maxX, minZ, and maxZ values.
+
+![StateExample](Media/enemySpawnerList.png)
+![StateExample](Media/EnemySpawnerPositionConstrain.png)
+
+I then tested this constrain system.
+
+![StateExample](Media/EnemySpawnPositionConstrainTest.gif)
+
+The enemies still flew beyond the spawn area's boundaries. I thought that it was another variable conversion error, but by returning to the EnemySpawner script, I noticed that I didn't write the code that enables the instantiated enemies to be added to the list where they will be managed. So I enabled adding the instantiated enemy objects to the list.
+
+From this:
+
+![StateExample](Media/EnemySpawnerListProblem.png)
+
+To this:
+
+![StateExample](Media/EnemySpawnerListAdd.png)
+
+Then I tested this solution.
+
+![StateExample](Media/EnemySpawnPositionConstrainFixed.gif)
+
+The enemies are now constrained within their spawn area, which is the battle area itself. However, it seems like once an enemy is defeated, the begin to fly out of the battle area once again. This is probably due to the EnemySpawner attempting to interact with an object that is no longer there. I will fix this problem later as I do not have the knowledge required to to tackle this problem right now.
+
+### Takeaways
+
+Building and testing the level made me realize the impact of my initial testing area. I realize now that it was actually quite small and its small size led me to completely ignore how some of the game’s mechanics such as the boomerang or the enemies would behave in a large boundless area. Or how the player field of view comes into play when keeping track of the boomerang's position. I recognize that I wasn’t as through in my testing process as I thought I was and I understand now the importance of testing in different scenarios and situations in order to have a more comprehensive and complete look on what you are working on.
+
+### To-do list
+
+-Complete the prototype of the 1st level (Finish the last three obstacles and two other battle areas)
+
+-Adjust the physics of the enemies (and maybe their speed too?) and the boomerang (prevent it from going too far away from the player).
