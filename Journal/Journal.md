@@ -532,3 +532,81 @@ Building and testing the level made me realize the impact of my initial testing 
 -Complete the prototype of the 1st level (Finish the last three obstacles and two other battle areas)
 
 -Adjust the physics of the enemies (and maybe their speed too?) and the boomerang (prevent it from going too far away from the player).
+
+## Session Project: 2003D Breaker development: 1st level ((09/04/2026))
+
+For this week, my goal was to finish the game’s first level and create a playable test build for the gameplay demo period.
+
+### Development process: Finishing the first level
+
+Last week, I finished the first obstacle and tweaked the enemy spawner. This week's work started with creating the next three obstacles, the narrow passage, the objects you must push out of the way and the target that you must destroy.
+
+![StateExample](Media/NarrowPassage.png)
+
+The second obstacle was simply created dublicating and resizing a bunch of cubes. In a future revised version, I would like to create a custom mesh for this obstacle. But for testing purposes in an early prototype this feels sufficient.
+
+![StateExample](Media/PushingObstacle.png)
+
+The third obstacle was created using cubes and spheres. The cubes are platforms on which the spheres rest. In order to cross the void, you must jump on these platforms. But before doing so you must knock the spheres off of them. Each sphere has a rigidbody component to enable physics and their mass is greatly reduced (0.04) in order to make them easy to push.
+
+For example, when the weight was left untouched, the spheres were very hard to push. That is why I reduced their weight.
+
+![StateExample](Media/HeavyBallTest.gif)
+
+When their weight was reduced, they became significanly easier to push. Which was my goal.
+
+![StateExample](Media/LightBallTest.gif)
+
+Then I created the final obstacle, starting with the script for the target itself.
+
+![StateExample](Media/DestroyableTargetScript.png) 
+
+It uses the same logic ase most other scripts that I use here for collisions. Except this time it looks specifically for the boomerang when something collides with it. When destroyed, it destroys the wall leading to the end of the level with it.
+
+![StateExample](Media/DestroyableTargetTest.gif)
+
+I applied a gold material on the target to make it stand out. Maybe it'll make it obvious that this is something you must hit with the boomerang in order to progress in the level.
+
+![StateExample](Media/TargetDestroyObstacle.png)
+
+The sphere behind the wall triggers the end of the level when the player strikes it with the boomerang. For the sake of the playable demo. I simply made the sphere invoke the GameOver method in the GameManager script which releads the level.
+
+With the level being done, now I pivoted to adding elements to ensure that my demo build is not only playable but also give me, the designer, a good opportunity to test certain of the game's mechanics. Thus, I had to add safeguards if the player falls out of bounds, a life point system and adjusted the boomerang and enemy scripts to make use of the life point system in order to trigger a game over if the player runs out of life points.
+
+### Development process: Gameplay additions for the demo build
+
+To prevent the player from falling out of bounds, I created the returnToTerrain script which will be connected to large rectagles floating under the level. When the player collides with any of these rectangles. they will be teleported back to the level instead of falling infinitely.
+
+![StateExample](Media/ReturnToTerrainScript.png)
+
+When the player collides with a rectangle with the script equipped, their position will be edited to match that of an empty object positionned in the stage. Effectively teleporting them back on the stage. When I initially created this script, there was an issue with the teleportation. The player would get teleported, but then they would immedieatly return to their previous position. [Thanks to an answer from Unity forum user Zarenityx on the subject](https://discussions.unity.com/t/teleporting-character-issue-with-transform-position-in-unity-2018-3/221631/4), I learned that disabling the character controller before the teleport and reenabling it after was the key to making this work.
+
+![StateExample](Media/returnToTerrainTest.gif)
+
+With this solved, I then enabled the enemy and boomerang scripts to use the LoseLife() method in the GameManager script and set the player's lives to 5. When a player gets hit or falls out of bounds, they loose one life point. Loose all five and it is game over and they get sent back to the beginning of the level.
+
+I also readjusted the movement of the enemies and the boomerang. I increased both their linear/angular damping, I slightly increassed their mass (0.01 => 0.02), and removed the normalization of the vectors behind the force applied onto them. These changes increased the boomerang's accuracy and removed its tendency of flying around you with a very large circular movement. The enemies also are now much more aggressive as they are quicker and more accurate too.
+
+### Development Extras: Visual style
+
+With the extra time I had left, I decided to experiment with Unity's graphical settings and post processing in order to begin working on the game's visual identity. 
+
+I sarted with the global volume's post processing abilities: while testing out its various settings, I stumbled upon split toning. This setting allowed me to change the color of the shadows and highlights to obtain interesting results.
+
+![StateExample](Media/SplitToning.png)
+
+![StateExample](Media/SplitToningResult.png)
+
+Then, in the PCRenderer, I cut adjusted the render scale to 50% to obtain a retro stylized look.
+
+![StateExample](Media/50%RenderScale.png)
+
+Finally, [I added a custom skybox obtained from an asset pack into the scene](https://assetstore.unity.com/packages/2d/textures-materials/sky/fantasy-skybox-free-18353).
+
+![StateExample](Media/CustomSkybox.png)
+
+This is just the beginning of the development of the game's visual style. In future updates, I would definetly like to add custom models, textures and animations not only for the player's charater, but for the objects that compose the level too.
+
+### Takeaways
+
+Building the rest of the level was a fun activity and it was also very interesting to see how easy it is to vastly change look of a scene using post processing and other visual elements. Now that my game's mechanics have been realized and adapted for a playable demo, I was now able to dedicate some time to the game's visuals. The feedback I will recieve during playtests will shape my to-do list for the future of this project.
